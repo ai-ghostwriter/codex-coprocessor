@@ -1,7 +1,7 @@
 {
   "name": "codex-coprocessor",
   "description": "Use the Codex CLI as a co-processor for Claude Code: offload heavy reads (codex-recon), parallel bulk tasks (codex-fanout), and noisy-output triage (codex-triage), so only distilled results enter Claude's context and sessions stay long and cheap.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "ai-ghostwriter",
     "email": "ghostwriter.joker@gmail.com"

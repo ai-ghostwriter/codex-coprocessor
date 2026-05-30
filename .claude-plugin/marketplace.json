@@ -9,7 +9,7 @@
     {
       "name": "codex-coprocessor",
       "description": "Context firewall (codex-recon), parallel map-reduce (codex-fanout), and output triage (codex-triage): three skills that route raw bytes to Codex and return only the distilled result.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": "./",
       "category": "productivity",
       "author": { "name": "ai-ghostwriter" }
@@ -17,14 +17,14 @@
     {
       "name": "delegate-to-codex",
       "description": "Teaches Claude when and how to offload work to the Codex CLI — heavy-token tasks plus capabilities Claude lacks (images, Office files, browser, Google/GitHub/Gmail).",
-      "source": { "source": "url", "url": "https://github.com/ai-ghostwriter/delegate-to-codex.git", "ref": "main", "sha": "2bbf270be25674f03ed76db3af46439236b28546" },
+      "source": { "source": "url", "url": "https://github.com/ai-ghostwriter/delegate-to-codex.git", "ref": "main", "sha": "0ab7a2afdcbe5b13f69167a7be4b99eec8ce0778" },
       "category": "productivity",
       "author": { "name": "ai-ghostwriter" }
     },
     {
       "name": "consilium",
       "description": "Structured debate loop between Claude Code and Codex on a topic, refereed by an independent judge, until they converge on one actionable decision.",
-      "source": { "source": "url", "url": "https://github.com/ai-ghostwriter/consilium.git", "ref": "main", "sha": "dbdb57f107040d7f3f89edad20dda680168f90ee" },
+      "source": { "source": "url", "url": "https://github.com/ai-ghostwriter/consilium.git", "ref": "main", "sha": "9a26d44b1f4ce2c4478d804727edb8f4d6bd9255" },
       "category": "productivity",
       "author": { "name": "ai-ghostwriter" }
     }
