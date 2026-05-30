@@ -1,0 +1,23 @@
+name: smoke-tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run all skill smoke tests (stubbed codex, no tokens)
+        run: |
+          set -e
+          for s in codex-recon codex-fanout codex-triage; do
+            echo "::group::$s"
+            bash "$s/scripts/test_smoke.sh"
+            echo "::endgroup::"
+          done

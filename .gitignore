@@ -1,0 +1,10 @@
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# fanout / run artifacts
+fanout_results.json
+
+# os
+.DS_Store
