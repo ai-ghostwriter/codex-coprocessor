@@ -1,0 +1,32 @@
+{
+  "name": "codex-coprocessor",
+  "description": "Claude Code + Codex co-processing toolkit: skills that offload token-heavy work to the Codex CLI so only distilled results reach Claude.",
+  "owner": {
+    "name": "ai-ghostwriter",
+    "email": "ghostwriter.joker@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "codex-coprocessor",
+      "description": "Context firewall (codex-recon), parallel map-reduce (codex-fanout), and output triage (codex-triage): three skills that route raw bytes to Codex and return only the distilled result.",
+      "version": "0.1.0",
+      "source": "./",
+      "category": "productivity",
+      "author": { "name": "ai-ghostwriter" }
+    },
+    {
+      "name": "delegate-to-codex",
+      "description": "Teaches Claude when and how to offload work to the Codex CLI — heavy-token tasks plus capabilities Claude lacks (images, Office files, browser, Google/GitHub/Gmail).",
+      "source": { "source": "url", "url": "https://github.com/ai-ghostwriter/delegate-to-codex.git" },
+      "category": "productivity",
+      "author": { "name": "ai-ghostwriter" }
+    },
+    {
+      "name": "consilium",
+      "description": "Structured debate loop between Claude Code and Codex on a topic, refereed by an independent judge, until they converge on one actionable decision.",
+      "source": { "source": "url", "url": "https://github.com/ai-ghostwriter/consilium.git" },
+      "category": "productivity",
+      "author": { "name": "ai-ghostwriter" }
+    }
+  ]
+}

@@ -18,6 +18,6 @@ jobs:
           set -e
           for s in codex-recon codex-fanout codex-triage; do
             echo "::group::$s"
-            bash "$s/scripts/test_smoke.sh"
+            bash "skills/$s/scripts/test_smoke.sh"
             echo "::endgroup::"
           done
