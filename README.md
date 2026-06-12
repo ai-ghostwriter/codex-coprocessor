@@ -2,6 +2,21 @@
 
 *[Versione italiana](README.it.md)*
 
+## Table of Contents
+
+- [What It Includes](#what-it-includes)
+- [Requirements](#requirements)
+- [Install From The Plugin Marketplace](#install-from-the-plugin-marketplace)
+- [Manual Install](#manual-install)
+- [How To Use It In Prompts](#how-to-use-it-in-prompts)
+  - [`/codex-recon` Examples](#codex-recon-examples)
+  - [`/codex-fanout` Examples](#codex-fanout-examples)
+  - [`/codex-triage` Examples](#codex-triage-examples)
+- [Running The Scripts Directly](#running-the-scripts-directly)
+- [Troubleshooting](#troubleshooting)
+- [Testing](#testing)
+- [License](#license)
+
 Codex Co-Processor is a Claude Code plugin for people who use Claude Code and also have the Codex CLI installed.
 
 It solves a simple problem: sometimes Claude would need to read a lot of files, process many similar tasks, or inspect a very long error log. That can fill Claude's chat context with raw text. This plugin lets Claude ask Codex to do that heavy reading first, then bring back only the short useful answer.
