@@ -2,9 +2,14 @@
 __pycache__/
 *.pyc
 .venv/
+.pytest_cache/
+.mypy_cache/
 
 # fanout / run artifacts
 fanout_results.json
 
 # os
 .DS_Store
+
+# local logs
+*.log

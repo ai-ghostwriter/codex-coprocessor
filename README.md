@@ -1,97 +1,160 @@
-# Codex Co-Processor 🧠⚡
+# Codex Co-Processor
 
-> A [Claude Code](https://docs.claude.com/en/docs/claude-code) **plugin** (and
-> marketplace) that uses the **Codex CLI** as a co-processor — so token-heavy work
-> happens in Codex and only the distilled result reaches Claude.
+*[Versione italiana](README.it.md)*
 
-*[🇮🇹 Versione italiana](README.it.md)*
+Codex Co-Processor is a Claude Code plugin for people who use Claude Code and also have the Codex CLI installed.
 
-**The principle:** Claude's expensive resource is its *context window*. Codex
-(gpt-5.5, ChatGPT Plus, no API billing) is cheap compute. Every tool here enforces
-one discipline:
+It solves a simple problem: sometimes Claude would need to read a lot of files, process many similar tasks, or inspect a very long error log. That can fill Claude's chat context with raw text. This plugin lets Claude ask Codex to do that heavy reading first, then bring back only the short useful answer.
 
-> **Raw bytes go to Codex. Only the distilled result returns to Claude.**
+You do not need to understand agents, context windows, or automation frameworks to use it. Install the plugin, then type one of its slash commands inside your normal Claude Code chat message.
 
-This keeps sessions long and cheap. Where
-[`delegate-to-codex`](https://github.com/ai-ghostwriter/delegate-to-codex) says
-"you *can* offload," this suite makes the saving **systematic** for the three
-highest-leverage cases.
+## What It Includes
 
-## The three skills
+The plugin adds three skills:
 
-| Skill | Use it when… | Returns |
-|-------|--------------|---------|
-| **[codex-recon](skills/codex-recon/)** | you'd read a big file / search a big codebase / fetch web pages just to answer a narrow question | only the distilled answer (raw content never enters Claude's context) |
-| **[codex-fanout](skills/codex-fanout/)** | you have N independent token-heavy tasks (process N files, generate N variants) | compact collected results for Claude to merge — run in parallel |
-| **[codex-triage](skills/codex-triage/)** | a command produced a huge/noisy log, test run, or stack trace and you need only the signal | the relevant lines + a one-line diagnosis |
-
-Each skill is **self-contained**: its script inlines its own `codex exec` call, so
-you can install the whole plugin or symlink just one skill.
-
-## Install as a plugin (recommended)
-
-This repo is both a Claude Code **plugin** and a **marketplace**. The marketplace
-also lists the sibling plugins `delegate-to-codex` and `consilium`.
-
-```text
-# in Claude Code:
-/plugin marketplace add ai-ghostwriter/codex-coprocessor
-/plugin install codex-coprocessor@codex-coprocessor
-# optional siblings from the same marketplace:
-/plugin install delegate-to-codex@codex-coprocessor
-/plugin install consilium@codex-coprocessor
-```
-
-## Quick start (standalone scripts)
-
-```bash
-# Recon: answer a question about a big codebase without reading it into Claude
-python skills/codex-recon/scripts/recon.py "What does AuthService.refresh() do?" src/auth/
-
-# Fanout: run N independent tasks in parallel, collect compact results
-python skills/codex-fanout/scripts/fanout.py --tasks tasks.json --max-parallel 4 -C /path/to/repo
-
-# Triage: distill a noisy test run down to the signal
-pytest -v 2>&1 | python skills/codex-triage/scripts/triage.py --focus "which tests failed and why"
-```
-
-All three run Codex with the safe `--sandbox workspace-write` default.
+| Skill | Use it for |
+| --- | --- |
+| `/codex-recon` | Ask a focused question about large files, folders, or a codebase without pasting everything into Claude. |
+| `/codex-fanout` | Run several independent tasks in parallel, such as converting many files or summarizing many documents. |
+| `/codex-triage` | Reduce a long terminal output, test log, build log, or stack trace to the important failure and likely cause. |
 
 ## Requirements
 
-- Python 3.9+ (standard library only — no pip dependencies)
-- [`codex`](https://github.com/openai/codex) CLI in PATH, authenticated (`codex login`)
+You need:
 
-## Manual install (single skill, no plugin)
+- Claude Code installed.
+- Codex CLI installed.
+- Codex CLI logged in with a ChatGPT account.
 
-Claude Code also discovers loose skills in `~/.claude/skills/`. To use just one:
-
-```bash
-git clone https://github.com/ai-ghostwriter/codex-coprocessor.git ~/dev/codex-coprocessor
-ln -s ~/dev/codex-coprocessor/skills/codex-recon ~/.claude/skills/codex-recon
-```
-
-Or the whole set:
+To log in to Codex, run this in your terminal:
 
 ```bash
-for s in codex-recon codex-fanout codex-triage; do
-  ln -s ~/dev/codex-coprocessor/skills/$s ~/.claude/skills/$s
-done
+codex login
 ```
+
+If `codex` is not found, install or fix the Codex CLI first, then come back to this plugin.
+
+## Install From The Plugin Marketplace
+
+Type these commands inside the Claude Code chat box, not in your normal terminal:
+
+```text
+/plugin marketplace add ai-ghostwriter/codex-coprocessor
+/plugin install codex-coprocessor@codex-coprocessor
+```
+
+After installation, restart Claude Code or run `/reload-plugins` if Claude Code asks you to reload plugins.
+
+## Manual Install
+
+Use this if you do not want to install through the plugin marketplace.
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/ai-ghostwriter/codex-coprocessor.git ~/codex-coprocessor
+```
+
+2. Create your Claude Code skills folder if it does not exist:
+
+```bash
+mkdir -p ~/.claude/skills
+```
+
+3. Link each skill folder:
+
+```bash
+ln -s ~/codex-coprocessor/skills/codex-recon ~/.claude/skills/codex-recon
+ln -s ~/codex-coprocessor/skills/codex-fanout ~/.claude/skills/codex-fanout
+ln -s ~/codex-coprocessor/skills/codex-triage ~/.claude/skills/codex-triage
+```
+
+4. Restart Claude Code or run `/reload-plugins`.
+
+## How To Use It In Prompts
+
+You use a skill by typing its slash command directly inside a normal Claude Code chat message.
+
+For example, do not run `/codex-recon` in the terminal. Type a message like this in Claude Code:
+
+```text
+Analyze the whole src folder and tell me where authentication is handled, use /codex-recon
+```
+
+### `/codex-recon` Examples
+
+```text
+Analyze the whole src folder and tell me where authentication is handled, use /codex-recon
+```
+
+```text
+Use /codex-recon to inspect README.md and skills/codex-recon/scripts/recon.py, then explain the exact command flags.
+```
+
+```text
+Use /codex-recon to search this project for where Codex CLI is called and summarize the result.
+```
+
+### `/codex-fanout` Examples
+
+```text
+Use /codex-fanout to convert every file in ./data to JSON. Each file is independent.
+```
+
+```text
+Use /codex-fanout to summarize each markdown file in ./docs separately, then give me one combined index.
+```
+
+```text
+Use /codex-fanout to review each package under ./packages independently and report the main risk in each one.
+```
+
+### `/codex-triage` Examples
+
+```text
+I pasted a long test failure below. Use /codex-triage to tell me which test failed first and why.
+```
+
+```text
+Run the build, then use /codex-triage on the output and tell me the first real compiler error.
+```
+
+```text
+Use /codex-triage to reduce this stack trace to the root cause and the file I should inspect first.
+```
+
+## Running The Scripts Directly
+
+The plugin is designed for Claude Code prompts, but each skill also includes a script:
+
+```bash
+python3 skills/codex-recon/scripts/recon.py "Where is login handled?" src/
+python3 skills/codex-fanout/scripts/fanout.py --tasks tasks.json --max-parallel 4
+pytest -v 2>&1 | python3 skills/codex-triage/scripts/triage.py --focus "first failing test"
+```
+
+## Troubleshooting
+
+If Claude Code does not recognize the slash commands, restart Claude Code or run `/reload-plugins`.
+
+If Codex fails, run `codex login` in your terminal and make sure `codex` works before using the plugin again.
+
+If marketplace installation fails, check that you typed the commands inside the Claude Code chat box:
+
+```text
+/plugin marketplace add ai-ghostwriter/codex-coprocessor
+/plugin install codex-coprocessor@codex-coprocessor
+```
+
+If manual installation fails, check that the symlinks point to real folders under `~/codex-coprocessor/skills/`.
 
 ## Testing
 
+The repository includes offline smoke tests. They use a fake `codex` command, so they do not spend tokens or call the real Codex CLI:
+
 ```bash
-for s in codex-recon codex-fanout codex-triage; do bash skills/$s/scripts/test_smoke.sh; done
+for s in codex-recon codex-fanout codex-triage; do bash "skills/$s/scripts/test_smoke.sh"; done
 ```
-
-Each prints `ALL TESTS PASSED`. The tests stub the `codex` binary — fully offline,
-no tokens spent. CI runs all three on every push
-([`.github/workflows/test.yml`](.github/workflows/test.yml)).
-
-## Design
-
-See [`docs/superpowers/specs/2026-05-30-codex-coprocessor-design.md`](docs/superpowers/specs/2026-05-30-codex-coprocessor-design.md).
 
 ## License
 

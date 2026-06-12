@@ -5,8 +5,8 @@
 
 ## Principle
 
-Claude's expensive resource is its **context window**. Codex (gpt-5.5 on a
-ChatGPT Plus plan, no API billing) is cheap compute. The whole suite enforces one
+Claude's expensive resource is its **context window**. The Codex CLI can do the
+large reading or batch work in a separate process. The whole suite enforces one
 discipline: **raw bytes go to Codex; only the distilled result returns to
 Claude.** This saves tokens and extends sessions.
 
@@ -31,9 +31,11 @@ codex-coprocessor/
 ├── LICENSE (MIT) / .gitignore
 ├── .github/workflows/test.yml      # runs all three smoke tests
 ├── docs/superpowers/specs/         # this spec
-├── codex-recon/{SKILL.md, scripts/recon.py, scripts/test_smoke.sh}
-├── codex-fanout/{SKILL.md, scripts/fanout.py, scripts/test_smoke.sh}
-└── codex-triage/{SKILL.md, scripts/triage.py, scripts/test_smoke.sh}
+├── .claude-plugin/{plugin.json, marketplace.json}
+└── skills/
+    ├── codex-recon/{SKILL.md, scripts/recon.py, scripts/test_smoke.sh}
+    ├── codex-fanout/{SKILL.md, scripts/fanout.py, scripts/test_smoke.sh}
+    └── codex-triage/{SKILL.md, scripts/triage.py, scripts/test_smoke.sh}
 ```
 
 ## Components
@@ -61,7 +63,7 @@ codex-coprocessor/
 
 ### codex-triage — output distiller
 - **Interface:** `triage.py [--input file | stdin] --focus "what to extract"
-  [-C dir] [--model M] [--timeout S]`
+  [--model M] [--timeout S]`
 - **Behavior:** reads a noisy blob (logs/test output/stack traces), writes it to a
   temp file, tells Codex to read that file and extract the signal focused on
   `--focus`. Passing via temp file (not argv) avoids ARG_MAX and reinforces the
@@ -77,6 +79,5 @@ executable returning canned output (zero tokens, fully offline), mirroring the
 
 ## Out of scope (YAGNI)
 
-- The Claude Code **plugin manifest / bundle** — evaluated later.
 - `consilium` and `delegate-to-codex` stay as separate repos.
 - Auto-offload hooks, model auto-selection, retries beyond a single failure path.

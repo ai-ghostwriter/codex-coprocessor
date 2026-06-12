@@ -13,6 +13,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Compile Python scripts
+        run: |
+          python3 -m py_compile \
+            skills/codex-recon/scripts/recon.py \
+            skills/codex-fanout/scripts/fanout.py \
+            skills/codex-triage/scripts/triage.py
+      - name: Check shell script syntax
+        run: |
+          bash -n \
+            skills/codex-recon/scripts/test_smoke.sh \
+            skills/codex-fanout/scripts/test_smoke.sh \
+            skills/codex-triage/scripts/test_smoke.sh
       - name: Run all skill smoke tests (stubbed codex, no tokens)
         run: |
           set -e

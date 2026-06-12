@@ -1,10 +1,11 @@
 {
   "name": "codex-coprocessor",
-  "description": "Use the Codex CLI as a co-processor for Claude Code: offload heavy reads (codex-recon), parallel bulk tasks (codex-fanout), and noisy-output triage (codex-triage), so only distilled results enter Claude's context and sessions stay long and cheap.",
+  "displayName": "Codex Co-Processor",
   "version": "0.2.0",
+  "description": "Use the Codex CLI as a co-processor for Claude Code: offload large reads, parallel batch work, and noisy-output triage so only distilled results enter Claude's context.",
   "author": {
     "name": "ai-ghostwriter",
-    "email": "ghostwriter.joker@gmail.com"
+    "url": "https://github.com/ai-ghostwriter"
   },
   "homepage": "https://github.com/ai-ghostwriter/codex-coprocessor",
   "repository": "https://github.com/ai-ghostwriter/codex-coprocessor",
@@ -15,5 +16,6 @@
     "token-optimization",
     "context-management",
     "ai-agents"
-  ]
+  ],
+  "skills": "./skills/"
 }

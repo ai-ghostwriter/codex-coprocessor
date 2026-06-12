@@ -1,32 +1,56 @@
 {
   "name": "codex-coprocessor",
-  "description": "Claude Code + Codex co-processing toolkit: skills that offload token-heavy work to the Codex CLI so only distilled results reach Claude.",
+  "description": "Claude Code plugin marketplace for Codex Co-Processor: skills that offload large reads, parallel batch work, and noisy-output triage to the Codex CLI.",
   "owner": {
     "name": "ai-ghostwriter",
-    "email": "ghostwriter.joker@gmail.com"
+    "url": "https://github.com/ai-ghostwriter"
   },
   "plugins": [
     {
       "name": "codex-coprocessor",
-      "description": "Context firewall (codex-recon), parallel map-reduce (codex-fanout), and output triage (codex-triage): three skills that route raw bytes to Codex and return only the distilled result.",
+      "description": "Three Claude Code skills: codex-recon for large reads, codex-fanout for parallel batch tasks, and codex-triage for noisy logs.",
       "version": "0.2.0",
       "source": "./",
       "category": "productivity",
-      "author": { "name": "ai-ghostwriter" }
-    },
-    {
-      "name": "delegate-to-codex",
-      "description": "Teaches Claude when and how to offload work to the Codex CLI — heavy-token tasks plus capabilities Claude lacks (images, Office files, browser, Google/GitHub/Gmail).",
-      "source": { "source": "url", "url": "https://github.com/ai-ghostwriter/delegate-to-codex.git", "ref": "main", "sha": "0ab7a2afdcbe5b13f69167a7be4b99eec8ce0778" },
-      "category": "productivity",
-      "author": { "name": "ai-ghostwriter" }
+      "author": {
+        "name": "ai-ghostwriter",
+        "url": "https://github.com/ai-ghostwriter"
+      },
+      "homepage": "https://github.com/ai-ghostwriter/codex-coprocessor",
+      "repository": "https://github.com/ai-ghostwriter/codex-coprocessor",
+      "license": "MIT"
     },
     {
       "name": "consilium",
-      "description": "Structured debate loop between Claude Code and Codex on a topic, refereed by an independent judge, until they converge on one actionable decision.",
-      "source": { "source": "url", "url": "https://github.com/ai-ghostwriter/consilium.git", "ref": "main", "sha": "9a26d44b1f4ce2c4478d804727edb8f4d6bd9255" },
-      "category": "productivity",
-      "author": { "name": "ai-ghostwriter" }
+      "description": "Structured debate loop between Claude Code and Codex with an independent judge.",
+      "version": "0.2.0",
+      "source": {
+        "source": "github",
+        "repo": "ai-ghostwriter/consilium"
+      },
+      "author": {
+        "name": "ai-ghostwriter",
+        "url": "https://github.com/ai-ghostwriter"
+      },
+      "homepage": "https://github.com/ai-ghostwriter/consilium",
+      "repository": "https://github.com/ai-ghostwriter/consilium",
+      "license": "MIT"
+    },
+    {
+      "name": "delegate-to-codex",
+      "description": "Teaches Claude Code when and how to offload work to the Codex CLI.",
+      "version": "0.2.0",
+      "source": {
+        "source": "github",
+        "repo": "ai-ghostwriter/delegate-to-codex"
+      },
+      "author": {
+        "name": "ai-ghostwriter",
+        "url": "https://github.com/ai-ghostwriter"
+      },
+      "homepage": "https://github.com/ai-ghostwriter/delegate-to-codex",
+      "repository": "https://github.com/ai-ghostwriter/delegate-to-codex",
+      "license": "MIT"
     }
   ]
 }
